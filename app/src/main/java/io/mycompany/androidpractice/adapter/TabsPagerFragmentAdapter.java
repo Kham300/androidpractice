@@ -5,44 +5,36 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import io.mycompany.androidpractice.fragments.ExampleFragment;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
-    private String[] tabs;
+    private final List<Fragment> fragmentList = new ArrayList<>();
+    private final List<String> tabsTitle = new ArrayList<>();
 
     public TabsPagerFragmentAdapter(FragmentManager fm) {
         super(fm);
-
-        tabs = new String[]{
-                "tab1",
-                "tab1",
-                "tab1"
-        };
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabs[position];
+        return tabsTitle.get(position);
     }
 
     @Override
     public Fragment getItem(int position) {
-
-        switch (position){
-            case 0:
-                return ExampleFragment.getInstance();
-            case 1:
-                return ExampleFragment.getInstance();
-            case 2:
-                return ExampleFragment.getInstance();
-        }
-        return null;
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return tabs.length;
+        return fragmentList.size();
+    }
+
+    public void addFragments(Fragment fragment, String title){
+        fragmentList.add(fragment);
+        tabsTitle.add(title);
     }
 }

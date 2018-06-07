@@ -12,6 +12,9 @@ import android.view.View;
 import java.util.Objects;
 
 import io.mycompany.androidpractice.adapter.TabsPagerFragmentAdapter;
+import io.mycompany.androidpractice.fragments.FragmentOne;
+import io.mycompany.androidpractice.fragments.FragmentThree;
+import io.mycompany.androidpractice.fragments.FragmentTwo;
 
 public class PageViewActivity extends AppCompatActivity {
 
@@ -47,10 +50,17 @@ public class PageViewActivity extends AppCompatActivity {
     private void initTabs() {
 
         viewPager = findViewById(R.id.viewPager);
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-
         tabLayout = findViewById(R.id.tabLayout);
+
+        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+
+        //set fragments
+        adapter.addFragments(new FragmentOne(), "One");
+        adapter.addFragments(new FragmentTwo(), "Two");
+        adapter.addFragments(new FragmentThree(), "Three");
+
+        //adapter setup
+        viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 }
