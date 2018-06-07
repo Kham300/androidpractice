@@ -20,6 +20,8 @@ public class PageViewActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -39,7 +41,7 @@ public class PageViewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -52,7 +54,6 @@ public class PageViewActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
 
         //set fragments
         adapter.addFragments(new FragmentOne(), "One");
@@ -62,5 +63,24 @@ public class PageViewActivity extends AppCompatActivity {
         //adapter setup
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void moveToRight(View view){
+        int currentItem = viewPager.getCurrentItem();
+        if (currentItem != 2) {
+            viewPager.setCurrentItem(currentItem + 1, true);
+        } else {
+            viewPager.setCurrentItem(0, true);
+        }
+    }
+
+
+    public void moveToLeft(View view){
+        int currentItem = viewPager.getCurrentItem();
+        if (currentItem != 0) {
+            viewPager.setCurrentItem(currentItem - 1, true);
+        } else {
+            viewPager.setCurrentItem(3, true);
+        }
     }
 }
