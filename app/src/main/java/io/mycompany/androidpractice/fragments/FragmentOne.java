@@ -1,6 +1,5 @@
 package io.mycompany.androidpractice.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,23 +11,12 @@ import android.widget.Button;
 import io.mycompany.androidpractice.R;
 
 public class FragmentOne extends Fragment {
+
     private static final int LAYOUT = R.layout.fragment_one;
+    private onMoveFragmentListener moveFragmentListener;
 
-    public interface onMoveFragmentListener{
-        public void changeFragment(int i);
-    }
-
-    onMoveFragmentListener moveFragmentListener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try{
-            moveFragmentListener = (onMoveFragmentListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must be implemented");
-        }
+    public void setMoveFragmentListener(onMoveFragmentListener moveFragmentListener) {
+        this.moveFragmentListener = moveFragmentListener;
     }
 
     @Nullable
@@ -45,7 +33,7 @@ public class FragmentOne extends Fragment {
         });
 
         Button buttonRight = view.findViewById(R.id.button_1_right);
-        buttonLeft.setOnClickListener(new View.OnClickListener() {
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 moveFragmentListener.changeFragment(2);
@@ -54,4 +42,5 @@ public class FragmentOne extends Fragment {
 
         return view;
     }
+
 }
