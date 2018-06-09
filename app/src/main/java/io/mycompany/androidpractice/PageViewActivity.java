@@ -1,9 +1,11 @@
 package io.mycompany.androidpractice;
 
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransitionImpl;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +18,10 @@ import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
 
-public class PageViewActivity extends AppCompatActivity {
+
+public class PageViewActivity extends AppCompatActivity implements FragmentOne.onMoveFragmentListener {
 
     private TabLayout tabLayout;
-    private ViewPager viewPager;
     TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
 
 
@@ -28,9 +30,13 @@ public class PageViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_view);
-
         initToolbar();
         initTabs();
+
+        Fragment frag1 = new FragmentOne();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.fragment, frag1);
+        ft.commit();
 
     }
 
@@ -44,43 +50,23 @@ public class PageViewActivity extends AppCompatActivity {
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
     }
 
     private void initTabs() {
 
-        viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-
-        //set fragments
+        //set titles
         adapter.addFragments(new FragmentOne(), "One");
         adapter.addFragments(new FragmentTwo(), "Two");
         adapter.addFragments(new FragmentThree(), "Three");
-
-        //adapter setup
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-    public void moveToRight(View view){
-        int currentItem = viewPager.getCurrentItem();
-        if (currentItem != 2) {
-            viewPager.setCurrentItem(currentItem + 1, true);
-        } else {
-            viewPager.setCurrentItem(0, true);
         }
-    }
 
+    @Override
+    public void changeFragment(int i) {
 
-    public void moveToLeft(View view){
-        int currentItem = viewPager.getCurrentItem();
-        if (currentItem != 0) {
-            viewPager.setCurrentItem(currentItem - 1, true);
-        } else {
-            viewPager.setCurrentItem(3, true);
-        }
     }
 }
