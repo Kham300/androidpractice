@@ -5,43 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/colorBlue">
+    android:background="@color/colorBlue"
+    tools:layout_editor_absoluteY="221dp">
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="5dp"
         android:gravity="center"
         android:text="1"
         android:textColor="@color/colorYellow"
         android:textSize="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_1_right"
+        app:layout_constraintStart_toEndOf="@+id/button1_left"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button1_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="75dp"
-        android:text="Left"
+        android:layout_marginEnd="10dp"
         android:onClick="moveToLeft"
+        android:text="Left"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_1_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="39dp"
-        android:text="right"
+        android:layout_marginEnd="4dp"
         android:onClick="moveToRight"
-        app:layout_constraintBottom_toBottomOf="@+id/button1_left"
+        android:text="right"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button1_left" />
+        app:layout_constraintStart_toEndOf="@+id/textView1"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
