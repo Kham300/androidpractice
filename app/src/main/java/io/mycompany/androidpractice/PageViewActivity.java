@@ -6,21 +6,30 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import io.mycompany.androidpractice.adapter.CardAdapter;
 import io.mycompany.androidpractice.adapter.TabsPagerFragmentAdapter;
 import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
+import io.mycompany.androidpractice.model.Card;
+import io.mycompany.androidpractice.util.DataUtil;
 
 public class PageViewActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
+
+
     TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
 
 
