@@ -1,50 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_one"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorYellow"
     android:layout_gravity="center"
-    android:background="@color/colorBlue"
-    tools:layout_editor_absoluteY="221dp">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center"
-        android:text="1"
-        android:textColor="@color/colorYellow"
-        android:textSize="130dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_1_right"
-        app:layout_constraintStart_toEndOf="@+id/button1_left"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button1_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:onClick="moveToLeft"
-        android:text="Left"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/button_1_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:onClick="moveToRight"
-        android:text="right"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

@@ -55,4 +55,8 @@ public class Card {
         return isEnabled;
     }
 
+    public void setEnabled(boolean bol){
+        this.isEnabled = bol;
+    }
+
 }

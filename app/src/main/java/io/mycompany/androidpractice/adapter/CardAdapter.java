@@ -2,19 +2,23 @@ package io.mycompany.androidpractice.adapter;
 
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
 
 import io.mycompany.androidpractice.R;
+import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.model.Card;
+import io.mycompany.androidpractice.util.DataUtil;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
@@ -34,13 +38,25 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-        Card card = cardList.get(position);
+        final Card card = cardList.get(position);
 
         holder.imageView.setImageDrawable(holder.imageView.getResources().getDrawable(card.getImage()));
         holder.textViewHeading.setText(card.getHeading());
         holder.textViewDescription.setText(card.getDescription());
-        holder.checkBox.setChecked(card.isEnabled());
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    card.setEnabled(true);
 
+//                    refreshUi();
+                } else {
+                    card.setEnabled(false);
+                }
+            }
+        });
+
+        holder.checkBox.setChecked(card.isEnabled());
     }
 
     @Override
@@ -52,7 +68,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         private ImageView imageView;
         private TextView textViewHeading, textViewDescription;
-        private Switch checkBox;
+        private CheckBox checkBox;
 
         public CardViewHolder(View itemView) {
             super(itemView);
@@ -63,4 +79,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             checkBox = itemView.findViewById(R.id.checkBox);
         }
     }
+
+
 }

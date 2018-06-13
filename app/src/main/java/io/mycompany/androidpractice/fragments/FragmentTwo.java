@@ -22,25 +22,21 @@ public class FragmentTwo extends Fragment {
     private static final int LAYOUT = R.layout.fragment_two;
     private RecyclerView recyclerView;
     private CardAdapter cardAdapter;
-    private List<Card> listCards;
-
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         View view = inflater.inflate(LAYOUT, container, false);
 
-
-        listCards = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        listCards = new ArrayList<>(DataUtil.getData());
-
-        cardAdapter = new CardAdapter(listCards);
-
+        cardAdapter = new CardAdapter(DataUtil.getAllData());
         recyclerView.setAdapter(cardAdapter);
+        cardAdapter.notifyDataSetChanged();//обновление адаптера
+
+
         return view;
     }
+
+
 }

@@ -33,7 +33,6 @@ public class PageViewActivity extends AppCompatActivity {
     TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +68,14 @@ public class PageViewActivity extends AppCompatActivity {
 
 
         //set fragments
-        adapter.addFragments(new FragmentOne(), "One");
-        adapter.addFragments(new FragmentTwo(), "Two");
+        adapter.addFragments(new FragmentOne(), "Chosen");
+        adapter.addFragments(new FragmentTwo(), "List");
         adapter.addFragments(new FragmentThree(), "Three");
 
         //adapter setup
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+       // viewPager.addOnPageChangeListener(); при прокрутке влево или в право обновить фрагмент справа https://medium.com/@elifbon/fragments-on-viewpager-8ace8430a8e1
     }
 
     public void moveToRight(View view){
@@ -87,7 +87,6 @@ public class PageViewActivity extends AppCompatActivity {
         }
     }
 
-
     public void moveToLeft(View view){
         int currentItem = viewPager.getCurrentItem();
         if (currentItem != 0) {
@@ -96,4 +95,6 @@ public class PageViewActivity extends AppCompatActivity {
             viewPager.setCurrentItem(3, true);
         }
     }
+
+
 }
