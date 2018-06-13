@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.imageView.setImageDrawable(holder.imageView.getResources().getDrawable(card.getImage()));
         holder.textViewHeading.setText(card.getHeading());
         holder.textViewDescription.setText(card.getDescription());
-        holder.checkBox.setActivated(card.isEnabled());
+        holder.checkBox.setChecked(card.isEnabled());
 
     }
 
@@ -51,7 +52,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         private ImageView imageView;
         private TextView textViewHeading, textViewDescription;
-        private CheckBox checkBox;
+        private Switch checkBox;
 
         public CardViewHolder(View itemView) {
             super(itemView);
