@@ -30,10 +30,10 @@ public class FragmentTwo extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        cardAdapter = new CardAdapter(DataUtil.getAllData());
+        cardAdapter = new CardAdapter(DataUtil.getInstance().getAllDataList());
         recyclerView.setAdapter(cardAdapter);
-        cardAdapter.notifyDataSetChanged();//обновление адаптера
-
+        //TODO обновление адаптера или или
+//        cardAdapter.notifyDataSetChanged();
 
         return view;
     }

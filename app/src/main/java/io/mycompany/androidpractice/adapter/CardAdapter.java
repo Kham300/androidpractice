@@ -2,8 +2,6 @@ package io.mycompany.androidpractice.adapter;
 
 
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +14,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import io.mycompany.androidpractice.R;
-import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.model.Card;
 import io.mycompany.androidpractice.util.DataUtil;
+
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
     private List<Card> cardList;
 
-    public CardAdapter(List<Card> cardList) {
-        this.cardList = cardList;
+    public CardAdapter(List<Card> list) {
+        this.cardList = list;
     }
 
     @NonNull
@@ -37,26 +35,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CardViewHolder holder, final int position) {
         final Card card = cardList.get(position);
 
         holder.imageView.setImageDrawable(holder.imageView.getResources().getDrawable(card.getImage()));
         holder.textViewHeading.setText(card.getHeading());
         holder.textViewDescription.setText(card.getDescription());
+        holder.checkBox.setChecked(card.isEnabled());
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    card.setEnabled(true);
-
-//                    refreshUi();
-                } else {
-                    card.setEnabled(false);
-                }
+                cardList.get(position).setEnabled(b);
+                DataUtil.getInstance().setAllDataList(cardList);
             }
         });
 
-        holder.checkBox.setChecked(card.isEnabled());
     }
 
     @Override
@@ -77,6 +70,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             textViewHeading = itemView.findViewById(R.id.textViewHead);
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
             checkBox = itemView.findViewById(R.id.checkBox);
+
         }
     }
 
