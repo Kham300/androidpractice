@@ -191,4 +191,12 @@ public class DataUtil extends Application {
     public void setAllDataList(List<Card> allDataList) {
         this.allDataList = allDataList;
     }
+
+    public void removeFavItem(Card card) {
+        chosenList.remove(card);
+    }
+
+    public void addFavItem(Card card) {
+        chosenList.add(card);
+    }
 }
