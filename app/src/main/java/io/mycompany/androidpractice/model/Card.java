@@ -1,7 +1,5 @@
 package io.mycompany.androidpractice.model;
-
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import java.util.Objects;
 
 public class Card {
 
@@ -17,6 +15,13 @@ public class Card {
         this.description = description;
         this.image = image;
         this.isEnabled = isEnabled;
+    }
+
+    public Card(int id, String heading, String description, int image){
+        this.id = id;
+        this.heading = heading;
+        this.description = description;
+        this.image = image;
     }
 
     public int getId() {
@@ -59,4 +64,17 @@ public class Card {
         this.isEnabled = bol;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return id == card.id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
 }

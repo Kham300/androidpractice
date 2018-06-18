@@ -1,6 +1,7 @@
 package io.mycompany.androidpractice.adapter;
 
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import java.util.List;
 
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
-import io.mycompany.androidpractice.util.DataUtil;
+import io.mycompany.androidpractice.util.DataUtilSimple;
 
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
@@ -30,12 +31,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+                .inflate(R.layout.all_list_item, parent, false);
         return new CardViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull CardViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final Card card = cardList.get(position);
 
         holder.imageView.setImageDrawable(holder.imageView.getResources().getDrawable(card.getImage()));
@@ -45,13 +46,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                cardList.get(position).setEnabled(b);
-//                DataUtil.getInstance().setAllDataList(cardList);
-
                 if (b){
-                    DataUtil.getInstance().addFavItem(cardList.get(position));
+                    DataUtilSimple.addFavItem(cardList.get(position));
                 } else {
-                    DataUtil.getInstance().removeFavItem(cardList.get(position));
+                    DataUtilSimple.removeFavItem(cardList.get(position));
                 }
             }
         });
