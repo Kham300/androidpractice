@@ -1,24 +1,26 @@
 package io.mycompany.androidpractice;
 
-import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+
 import io.mycompany.androidpractice.adapter.TabsPagerFragmentAdapter;
 import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
+import io.mycompany.androidpractice.util.DataUtilSimple;
 
 public class PageViewActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
+
     private ViewPager viewPager;
-    private Toolbar toolbar;
 
 
     TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
@@ -32,11 +34,26 @@ public class PageViewActivity extends AppCompatActivity {
         initToolbar();
         initTabs();
 
+        clearFragment();
+
     }
+
+    private void clearFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (fragment != null && fragment.isVisible() && fragment instanceof FragmentOne) {
+                final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.detach(fragment);
+                ft.attach(fragment);
+                ft.commit();
+            }
+        }
+    }
+
 
     private void initToolbar() {
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null){
@@ -47,6 +64,7 @@ public class PageViewActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataUtilSimple.removeAllItems();
                 onBackPressed();
             }
         });
@@ -54,7 +72,7 @@ public class PageViewActivity extends AppCompatActivity {
 
     private void initTabs() {
         viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
 
 
         //set fragments
@@ -73,13 +91,13 @@ public class PageViewActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0){
-                    Fragment frg;
-                    frg = getSupportFragmentManager().findFragmentByTag(FragmentOne.TAG);
-                    final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.detach(frg);
-                    ft.attach(frg);
-                    ft.commit();
+                if (position == 0) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    for (Fragment fragment : fragmentManager.getFragments()) {
+                        if (fragment != null && fragment.isVisible() && fragment instanceof FragmentOne) {
+                            ((FragmentOne) fragment).refreshUi();
+                        }
+                    }
                 }
             }
 

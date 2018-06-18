@@ -27,7 +27,7 @@ public class DataUtilSimple {
                         "Heading 2",
                         "Description 2",
                         R.drawable.ic_android_black_24dp,
-                        false));
+                        true));
 
         allListData.add(
                 new Card(
@@ -39,11 +39,29 @@ public class DataUtilSimple {
 
         }
 
+
+
+    public static void removeAllItems() {
+        favoriteList.clear();
+    }
+
+//    public static List<Card> initFavItems(){
+//        List<Card> list = new ArrayList<>();
+//        for (Card c : allListData){
+//            if (c.isEnabled()) {
+//                list.add(c);
+//            }
+//        }
+//        return list;
+//    }
+
     public static void removeFavItem(Card card) {
         favoriteList.remove(card);
     }
 
     public static void addFavItem(Card card) {
-        favoriteList.add(card);
+        if (!favoriteList.contains(card)) {
+            favoriteList.add(card);
+        }
     }
 }

@@ -43,6 +43,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.textViewHeading.setText(card.getHeading());
         holder.textViewDescription.setText(card.getDescription());
         holder.checkBox.setChecked(card.isEnabled());
+        if (card.isEnabled() && !DataUtilSimple.favoriteList.contains(card)){
+            DataUtilSimple.favoriteList.add(card);
+        }
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
