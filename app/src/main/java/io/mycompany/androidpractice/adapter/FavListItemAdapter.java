@@ -20,6 +20,8 @@ public class FavListItemAdapter extends RecyclerView.Adapter<FavListItemAdapter.
     private List<Card> cardList;
     private boolean multiSelect = false;
     private ArrayList<Integer> selectedItems = new ArrayList<Integer>();
+    public ArrayList<Card> selected_usersList;
+    public ArrayList<Card> usersList;
 
     public FavListItemAdapter(List<Card> cardList) {
         this.cardList = cardList;

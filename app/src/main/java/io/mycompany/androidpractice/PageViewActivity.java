@@ -25,6 +25,7 @@ public class PageViewActivity extends AppCompatActivity {
 
 
     private ViewPager viewPager;
+    private Menu context_menu;
 
 
     TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
