@@ -27,7 +27,7 @@ public class FragmentOne extends Fragment {
     private static final int LAYOUT = R.layout.fragment_one_layout;
     private FavListItemAdapter favListItemAdapter;
     private boolean isMultiSelect = false;
-    ArrayList<Card> user_list = new ArrayList<>();
+    private ArrayList<Card> user_list = new ArrayList<>();
     ArrayList<Card> multiselect_list = new ArrayList<>();
     ActionMode mActionMode;
     AlertDialogHelper alertDialogHelper;
@@ -105,7 +105,7 @@ public class FragmentOne extends Fragment {
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
             isMultiSelect = false;
-            multiselect_list = new ArrayList<Card>();
+            multiselect_list = new ArrayList<>();
             refreshAdapter();
 
         }
