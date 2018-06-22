@@ -13,9 +13,10 @@ import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.adapter.FavListItemAdapter;
 import io.mycompany.androidpractice.util.DataUtilSimple;
 
-public class FragmentOne extends Fragment {
+public class FragmentOne extends Fragment implements FavListItemAdapter.CallFragmentFromAdapter {
 
-    //TODO сделать иконки и при нажатии выводить тоаст а при долгом нажатии чтобы выскакивало меню
+    @Nullable
+    private CallActivityFromFragment callBackToActivity;
     private static final int LAYOUT = R.layout.fragment_one_layout;
     private FavListItemAdapter favListItemAdapter;
 
@@ -27,6 +28,7 @@ public class FragmentOne extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_one);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         favListItemAdapter = new FavListItemAdapter(DataUtilSimple.favoriteList);
+        favListItemAdapter.setCallbackToAdapter(this);
         recyclerView.setAdapter(favListItemAdapter);
         return view;
     }
@@ -35,4 +37,18 @@ public class FragmentOne extends Fragment {
         favListItemAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void notifyToChangeFragmentTwo() {
+        if (callBackToActivity != null) {
+            callBackToActivity.refreshDataInFragmentTwo();
+        }
+    }
+
+    public interface CallActivityFromFragment {
+        void refreshDataInFragmentTwo();
+    }
+
+    public void setCallBackToActivity(@Nullable CallActivityFromFragment callBackToActivity) {
+        this.callBackToActivity = callBackToActivity;
+    }
 }

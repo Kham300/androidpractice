@@ -7,39 +7,31 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 
+import io.mycompany.androidpractice.adapter.CardAdapter;
+import io.mycompany.androidpractice.adapter.FavListItemAdapter;
 import io.mycompany.androidpractice.adapter.TabsPagerFragmentAdapter;
 import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
 import io.mycompany.androidpractice.util.DataUtilSimple;
 
-public class PageViewActivity extends AppCompatActivity {
-
+public class PageViewActivity extends AppCompatActivity implements FragmentOne.CallActivityFromFragment {
 
     private ViewPager viewPager;
 
-
     TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_view);
-
         initToolbar();
         initTabs();
-
-        clearFragment();
-
+        //clearFragment();
     }
 
     private void clearFragment() {
@@ -53,7 +45,6 @@ public class PageViewActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private void initToolbar() {
 
@@ -78,9 +69,11 @@ public class PageViewActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
+        FragmentOne fragmentOne = new FragmentOne();
+        fragmentOne.setCallBackToActivity(this);
 
         //set fragments
-        adapter.addFragments(new FragmentOne(), "Chosen");
+        adapter.addFragments(fragmentOne, "Chosen");
         adapter.addFragments(new FragmentTwo(), "List");
         adapter.addFragments(new FragmentThree(), "Three");
 
@@ -127,6 +120,16 @@ public class PageViewActivity extends AppCompatActivity {
             viewPager.setCurrentItem(currentItem - 1, true);
         } else {
             viewPager.setCurrentItem(3, true);
+        }
+    }
+
+    @Override
+    public void refreshDataInFragmentTwo() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (fragment != null && fragment.isVisible() && fragment instanceof FragmentTwo) {
+                ((FragmentTwo) fragment).refreshUi();
+            }
         }
     }
 

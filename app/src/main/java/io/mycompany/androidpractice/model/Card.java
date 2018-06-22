@@ -8,6 +8,10 @@ public class Card {
     private int image;
     private boolean isEnabled;
 
+    public Card (){
+
+    }
+
 
     public Card(int id, String heading, String description, int image, boolean isEnabled) {
         this.id = id;

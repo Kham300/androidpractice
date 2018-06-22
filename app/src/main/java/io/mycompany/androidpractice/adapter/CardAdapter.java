@@ -16,6 +16,7 @@ import java.util.List;
 
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
+import io.mycompany.androidpractice.util.DataUtil;
 import io.mycompany.androidpractice.util.DataUtilSimple;
 
 
@@ -51,12 +52,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     DataUtilSimple.addFavItem(cardList.get(position));
+                    DataUtilSimple.allListData.get(position).setEnabled(true);
                 } else {
                     DataUtilSimple.removeFavItem(cardList.get(position));
+                    DataUtilSimple.allListData.get(position).setEnabled(false);
                 }
             }
         });
-
     }
 
     @Override
@@ -70,7 +72,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         private TextView textViewHeading, textViewDescription;
         private CheckBox checkBox;
 
-        public CardViewHolder(View itemView) {
+        CardViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageView);
