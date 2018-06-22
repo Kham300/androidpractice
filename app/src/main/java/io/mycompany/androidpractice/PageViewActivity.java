@@ -100,7 +100,6 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
@@ -131,6 +130,14 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
                 ((FragmentTwo) fragment).refreshUi();
             }
         }
+    }
+//TODO заменить рефреш юай на что то по проще https://stackoverflow.com/questions/7263291/viewpager-pageradapter-not-updating-the-view/8024557#8024557
+    void setAdapter(int position) {
+//        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+//        viewPager.setAdapter(adapter);
+        // when notify then set manually current position.
+        viewPager.setCurrentItem(position);
+        adapter.notifyDataSetChanged();
     }
 
 }
