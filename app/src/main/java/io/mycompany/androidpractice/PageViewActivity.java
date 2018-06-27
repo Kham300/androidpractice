@@ -131,7 +131,8 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
             }
         }
     }
-//TODO заменить рефреш юай на что то по проще https://stackoverflow.com/questions/7263291/viewpager-pageradapter-not-updating-the-view/8024557#8024557
+
+//TODO заменить рефрешюай на что то по проще https://stackoverflow.com/questions/7263291/viewpager-pageradapter-not-updating-the-view/8024557#8024557
     void setAdapter(int position) {
 //        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
 //        viewPager.setAdapter(adapter);

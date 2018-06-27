@@ -10,6 +10,7 @@ import java.util.Set;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
 
+@Deprecated
 public class DataUtil extends Application {
 
     private static DataUtil INSTANCE;
