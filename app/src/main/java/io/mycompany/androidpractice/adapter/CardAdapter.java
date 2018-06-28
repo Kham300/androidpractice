@@ -44,21 +44,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.textViewHeading.setText(card.getHeading());
         holder.textViewDescription.setText(card.getDescription());
         holder.checkBox.setChecked(card.isEnabled());
+
         if (card.isEnabled() && !DataUtilSimple.favoriteList.contains(card)){
             DataUtilSimple.favoriteList.add(card);
         }
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    DataUtilSimple.addFavItem(cardList.get(position));
-                    DataUtilSimple.allListData.get(position).setEnabled(true);
-                } else {
-                    DataUtilSimple.removeFavItem(cardList.get(position));
-                    DataUtilSimple.allListData.get(position).setEnabled(false);
-                }
-            }
-        });
     }
 
     @Override
@@ -79,6 +68,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             textViewHeading = itemView.findViewById(R.id.textViewHead);
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
             checkBox = itemView.findViewById(R.id.checkBox);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b){
+                        DataUtilSimple.addFavItem(cardList.get(getAdapterPosition()));
+                        DataUtilSimple.allListData.get(getAdapterPosition()).setEnabled(true);
+                        cardList.get(getAdapterPosition()).setEnabled(true);
+                    } else {
+                        DataUtilSimple.removeFavItem(cardList.get(getAdapterPosition()));
+                        DataUtilSimple.allListData.get(getAdapterPosition()).setEnabled(false);
+                        cardList.get(getAdapterPosition()).setEnabled(false);
+                    }
+                }
+            });
 
         }
     }

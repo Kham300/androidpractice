@@ -68,6 +68,8 @@ public class Card {
         this.isEnabled = bol;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

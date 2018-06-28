@@ -1,6 +1,7 @@
 package io.mycompany.androidpractice;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 
@@ -18,8 +21,9 @@ import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
 import io.mycompany.androidpractice.util.DataUtilSimple;
+import io.mycompany.androidpractice.util.DialogToFavItems;
 
-public class PageViewActivity extends AppCompatActivity implements FragmentOne.CallActivityFromFragment {
+public class PageViewActivity extends AppCompatActivity implements FragmentOne.CallActivityFromFragment{
 
     private ViewPager viewPager;
 
@@ -132,7 +136,19 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
         }
     }
 
-//TODO заменить рефрешюай на что то по проще https://stackoverflow.com/questions/7263291/viewpager-pageradapter-not-updating-the-view/8024557#8024557
+    @Override
+    public boolean onCreatePanelMenu(int featureId, Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        return supe
+    }
+
+    //TODO заменить рефрешюай на что то по проще https://stackoverflow.com/questions/7263291/viewpager-pageradapter-not-updating-the-view/8024557#8024557
     void setAdapter(int position) {
 //        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
 //        viewPager.setAdapter(adapter);
