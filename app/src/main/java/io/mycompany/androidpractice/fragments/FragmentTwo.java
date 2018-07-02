@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,16 +13,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.mycompany.androidpractice.PageViewActivity;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.adapter.CardAdapter;
-import io.mycompany.androidpractice.model.Card;
-import io.mycompany.androidpractice.util.DataUtil;
+import io.mycompany.androidpractice.dialogs.AddNewItemDialogFragment;
 import io.mycompany.androidpractice.util.DataUtilSimple;
 
 public class FragmentTwo extends Fragment {
@@ -36,9 +32,19 @@ public class FragmentTwo extends Fragment {
         View view = inflater.inflate(LAYOUT, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         cardAdapter = new CardAdapter(DataUtilSimple.allListData);
         recyclerView.setAdapter(cardAdapter);
+        Button btnAddNewItem = view.findViewById(R.id.btnNewItem);
+        btnAddNewItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNewItemDialogFragment addNewItemDialogFragment = AddNewItemDialogFragment.newInstance();
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                addNewItemDialogFragment.show(manager,"new item");
+            }
+        });
 
         return view;
     }

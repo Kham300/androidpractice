@@ -4,4 +4,9 @@
     <string name="action_delete">delete</string>
     <string name="action_two">action_2</string>
     <string name="action_three">fragment</string>
+    <string name="favorite_item">Favorite item?</string>
+    <string name="description">Description</string>
+    <string name="header">Header</string>
+    <string name="add_new_item">Add new Item</string>
+    <string name="add">Add</string>
 </resources>

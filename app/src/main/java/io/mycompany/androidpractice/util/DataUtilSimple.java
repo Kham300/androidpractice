@@ -127,4 +127,10 @@ public class DataUtilSimple {
             favoriteList.add(card);
         }
     }
+
+    public static void addNewItem(Card card){
+        allListData.add(card);
+    }
+
+
 }

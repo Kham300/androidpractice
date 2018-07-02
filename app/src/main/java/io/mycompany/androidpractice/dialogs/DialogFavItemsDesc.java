@@ -1,4 +1,4 @@
-package io.mycompany.androidpractice.util;
+package io.mycompany.androidpractice.dialogs;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

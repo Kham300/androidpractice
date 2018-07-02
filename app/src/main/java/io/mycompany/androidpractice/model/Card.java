@@ -1,15 +1,18 @@
 package io.mycompany.androidpractice.model;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import io.mycompany.androidpractice.R;
 
 public class Card {
 
+    private static final AtomicInteger count = new AtomicInteger(12);
     private int id;
     private String heading, description;
     private int image;
     private boolean isEnabled;
 
     public Card (){
-
     }
 
 
@@ -21,11 +24,12 @@ public class Card {
         this.isEnabled = isEnabled;
     }
 
-    public Card(int id, String heading, String description, int image){
-        this.id = id;
+    public Card(String heading, String description, boolean isEnabled){
+        id = count.incrementAndGet();
         this.heading = heading;
         this.description = description;
-        this.image = image;
+        this.image = R.drawable.ic_android_black_24dp;
+        this.isEnabled = isEnabled;
     }
 
     public int getId() {

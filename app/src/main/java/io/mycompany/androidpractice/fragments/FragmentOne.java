@@ -19,8 +19,8 @@ import android.widget.Toast;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.adapter.FavListItemAdapter;
 import io.mycompany.androidpractice.util.DataUtilSimple;
-import io.mycompany.androidpractice.util.DialogFavItemsDesc;
-import io.mycompany.androidpractice.util.DialogToFavItems;
+import io.mycompany.androidpractice.dialogs.DialogFavItemsDesc;
+import io.mycompany.androidpractice.dialogs.DialogToFavItems;
 
 public class FragmentOne extends Fragment implements FavListItemAdapter.CallFragmentFromAdapter, FavListItemAdapter.CreateDialogFragment,  DialogToFavItems.DialogToFavItemsListener, FavListItemAdapter.DialogItemDescriptionListener {
 

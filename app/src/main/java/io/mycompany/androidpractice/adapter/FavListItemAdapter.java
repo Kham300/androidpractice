@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 import java.util.List;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
 import io.mycompany.androidpractice.util.DataUtilSimple;
-import io.mycompany.androidpractice.util.DialogFavItemsDesc;
 
 public class FavListItemAdapter extends RecyclerView.Adapter<FavListItemAdapter.FavItemViewHolder>  {
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/add_new_item"
+        android:textSize="26sp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:paddingTop="5dp"
+        android:id="@+id/editTextHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/header" />
+
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/description"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/favorite_item" />
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+        android:background="@color/colorAccent"/>
+
+</LinearLayout>
