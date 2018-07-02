@@ -9,8 +9,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.adapter.FavListItemAdapter;
@@ -41,6 +45,26 @@ public class FragmentOne extends Fragment implements FavListItemAdapter.CallFrag
         return view;
     }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_one_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.fragment_action_toast:
+                makeToast();
+                return true;
+                default:
+            return false;
+        }
+    }
+
     public void refreshUi() {
         favListItemAdapter.notifyDataSetChanged();
     }
@@ -50,6 +74,12 @@ public class FragmentOne extends Fragment implements FavListItemAdapter.CallFrag
         if (callBackToActivity != null) {
             callBackToActivity.refreshDataInFragmentTwo();
         }
+    }
+
+    public void makeToast() {
+        Toast toast = Toast.makeText(getActivity(),
+                "FragmentOne action!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override

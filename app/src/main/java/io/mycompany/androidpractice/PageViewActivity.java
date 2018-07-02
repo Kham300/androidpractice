@@ -1,10 +1,10 @@
 package io.mycompany.androidpractice;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,16 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
-import io.mycompany.androidpractice.adapter.CardAdapter;
-import io.mycompany.androidpractice.adapter.FavListItemAdapter;
 import io.mycompany.androidpractice.adapter.TabsPagerFragmentAdapter;
 import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
 import io.mycompany.androidpractice.util.DataUtilSimple;
-import io.mycompany.androidpractice.util.DialogToFavItems;
 
 public class PageViewActivity extends AppCompatActivity implements FragmentOne.CallActivityFromFragment{
 
@@ -35,7 +33,6 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
         setContentView(R.layout.activity_page_view);
         initToolbar();
         initTabs();
-        //clearFragment();
     }
 
     private void clearFragment() {
@@ -100,12 +97,69 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
                         }
                     }
                 }
+
+                invalidateOptionsMenu(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        invalidateOptionsMenu(0);
+    }
+
+    private void invalidateOptionsMenu(int position) {
+        for(int i = 0; i < adapter.getCount(); i++) {
+            Fragment fragment = adapter.getItem(i);
+            fragment.setHasOptionsMenu(i == position);
+        }
+        invalidateOptionsMenu();
+    }
+
+      @Override
+      public void refreshDataInFragmentTwo() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (fragment != null && fragment.isVisible() && fragment instanceof FragmentTwo) {
+                ((FragmentTwo) fragment).refreshUi();
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_refresh:
+                refreshAllData();
+                return true;
+            case R.id.action_actions:
+                notifyActivityToast();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void notifyActivityToast() {
+        Toast toast = Toast.makeText(this,
+                "Activity", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    private void refreshAllData() {
+        Toast toast = Toast.makeText(this,
+                "Refresh data from activity", Toast.LENGTH_SHORT);
+        toast.show();
+        adapter.notifyDataSetChanged();
     }
 
     public void moveToRight(View view){
@@ -126,35 +180,6 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
         }
     }
 
-    @Override
-    public void refreshDataInFragmentTwo() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        for (Fragment fragment : fragmentManager.getFragments()) {
-            if (fragment != null && fragment.isVisible() && fragment instanceof FragmentTwo) {
-                ((FragmentTwo) fragment).refreshUi();
-            }
-        }
-    }
 
-    @Override
-    public boolean onCreatePanelMenu(int featureId, Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return supe
-    }
-
-    //TODO заменить рефрешюай на что то по проще https://stackoverflow.com/questions/7263291/viewpager-pageradapter-not-updating-the-view/8024557#8024557
-    void setAdapter(int position) {
-//        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
-//        viewPager.setAdapter(adapter);
-        // when notify then set manually current position.
-        viewPager.setCurrentItem(position);
-        adapter.notifyDataSetChanged();
-    }
 
 }

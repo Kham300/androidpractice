@@ -7,8 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +41,31 @@ public class FragmentTwo extends Fragment {
         recyclerView.setAdapter(cardAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_two_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.fragment_action_toast:
+                makeToast();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void makeToast() {
+        Toast toast = Toast.makeText(getActivity(),
+                "Fragment two Action!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void refreshUi() {

@@ -13,7 +13,9 @@
         android:background="#ff15cc48"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"></android.support.v7.widget.Toolbar>
+        tools:layout_editor_absoluteY="0dp">
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"

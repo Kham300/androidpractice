@@ -44,8 +44,6 @@ public class FavListItemAdapter extends RecyclerView.Adapter<FavListItemAdapter.
         final Card card = cardList.get(position);
 
         holder.imageView.setImageDrawable(holder.imageView.getResources().getDrawable(card.getImage()));
-//        holder.textViewDescriptionFav.setText(card.getDescription());
-//        holder.textViewHeadingFav.setText(card.getHeading());
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
@@ -102,7 +100,6 @@ public class FavListItemAdapter extends RecyclerView.Adapter<FavListItemAdapter.
 
     public class FavItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private ImageView imageView;
-        private TextView textViewHeadingFav, textViewDescriptionFav;
         private ItemClickListener itemClickListener;
 
         FavItemViewHolder(View itemView) {
@@ -112,8 +109,6 @@ public class FavListItemAdapter extends RecyclerView.Adapter<FavListItemAdapter.
             itemView.setOnLongClickListener(this);
 
             imageView = itemView.findViewById(R.id.imageViewFav);
-//            textViewHeadingFav = itemView.findViewById(R.id.textViewHeadFav);
-//            textViewDescriptionFav = itemView.findViewById(R.id.textViewDescriptionFav);
 
         }
 
