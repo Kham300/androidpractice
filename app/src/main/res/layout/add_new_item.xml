@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/add_new_item"
         android:textSize="26sp"
         android:layout_marginTop="5dp"
@@ -15,6 +15,9 @@
 
     <EditText
         android:paddingTop="5dp"
+        android:maxLength="20"
+        android:digits="@string/pattern"
+        android:inputType="textFilter"
         android:id="@+id/editTextHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

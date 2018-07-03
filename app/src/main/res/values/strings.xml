@@ -11,4 +11,5 @@
     <string name="add">Add</string>
     <string name="description">Description</string>
     <string name="heading">Heading</string>
+    <string name="pattern">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
 </resources>

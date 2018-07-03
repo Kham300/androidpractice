@@ -3,6 +3,7 @@ package io.mycompany.androidpractice.dialogs;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
 import io.mycompany.androidpractice.util.DataUtilSimple;
+import io.mycompany.androidpractice.util.InputFilterMinMax;
 
 public class AddNewItemDialogFragment extends DialogFragment {
 
