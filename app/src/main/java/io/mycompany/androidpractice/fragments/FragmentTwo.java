@@ -22,7 +22,7 @@ import io.mycompany.androidpractice.util.DataUtilSimple;
 
 public class FragmentTwo extends Fragment {
 
-    private static final int LAYOUT = R.layout.fragment_two;
+    private static final int LAYOUT = R.layout.fragment_two_layout;
     private CardAdapter cardAdapter;
 
 
