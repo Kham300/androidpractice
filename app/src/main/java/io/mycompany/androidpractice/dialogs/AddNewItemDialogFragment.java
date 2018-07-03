@@ -41,25 +41,30 @@ public class AddNewItemDialogFragment extends DialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeNewItem();
-                dismiss();
+                if(makeNewItem()){
+                    dismiss();
+                }
             }
         });
-
         return view;
     }
-    public void makeNewItem(){
 
+    public boolean makeNewItem(){
+        boolean res;
         String heading = String.valueOf(textHeading.getText());
         String desc = String.valueOf(textDesc.getText());
 
-        if (!heading.isEmpty() && !desc.isEmpty()) {
+        if (!(heading.length() == 0) && !(desc.length() == 0)) {
             DataUtilSimple.addNewItem(new Card(heading, desc, checkBox.isChecked()));
             Toast toast = Toast.makeText(getActivity(),
                     "Successful", Toast.LENGTH_SHORT);
             toast.show();
+            res = true;
         } else {
-
+            textHeading.setError("Please enter value");
+            textDesc.setError("Please enter value");
+            res = false;
         }
+        return res;
     }
 }

@@ -6,10 +6,11 @@
     android:layout_height="wrap_content"
     android:background="@color/colorYellow"
     android:layout_gravity="center"
-    android:padding="16dp">
+    >
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +20,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:overScrollMode="never"/>
 
             <Button
                 android:id="@+id/btnNewItem"

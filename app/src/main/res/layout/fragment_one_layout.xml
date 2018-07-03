@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorYellow"
-    android:layout_gravity="center"
-    android:padding="16dp">
+    android:layout_gravity="center">
     <FrameLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/fragment_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
+            android:overScrollMode="never"
             android:id="@+id/recycler_view_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
