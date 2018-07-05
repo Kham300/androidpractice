@@ -5,13 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -20,33 +18,39 @@ import android.widget.Toast;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
 import io.mycompany.androidpractice.util.DataUtilSimple;
-import io.mycompany.androidpractice.util.InputFilterMinMax;
-
-import static android.text.InputType.TYPE_CLASS_TEXT;
-import static android.text.InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
-import static android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
 
 public class AddNewItemDialogFragment extends DialogFragment {
 
+    public static final String DIALOG_TAG = "new_item";
+
     private EditText textHeading;
+
     private EditText textDesc;
+
     private CheckBox checkBox;
 
     public AddNewItemDialogFragment() {
     }
 
     public static AddNewItemDialogFragment newInstance() {
+        //todo пустой метод. newInstance нужен тогда, когда ты создаешь экземпляр объекта с какими-то параметрами.
         return new AddNewItemDialogFragment();
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_new_item, container, false);
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        //todo не нужно
+        //todo инициализацию переменных лучше выносить в отдельный метод init(view)
+
 
         textHeading = view.findViewById(R.id.editTextHeader);
         textHeading.addTextChangedListener(new TextWatcher() {
+            //todo анонимный класс, когда он большой, лучше вынести в отдельный метод для лучшей читаемости
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -81,6 +85,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
                 }
             }
 
+            //todo надо убрать из анонимного класса на уровень выше
             private String capitalize(final String line) {
                 return Character.toUpperCase(line.charAt(0)) + line.substring(1);
             }
@@ -94,9 +99,9 @@ public class AddNewItemDialogFragment extends DialogFragment {
                 }
 
 
-
             }
 
+            //todo надо убрать из анонимного класса на уровень выше
             private boolean isAllowed(char currentChar) {
                 return Character.isLetter(currentChar) && !Character.isSpaceChar(currentChar);
             }
@@ -123,13 +128,13 @@ public class AddNewItemDialogFragment extends DialogFragment {
         String heading = String.valueOf(textHeading.getText());
         String desc = String.valueOf(textDesc.getText());
 
-        if (!(heading.length() == 0) && !(desc.length() == 0)) {
+        //todo обычно, в начале проверяют условие с ошибкой, а потом условие, в котором нет ошибки
+        if ((heading.length() != 0) && (desc.length() != 0)) {
             DataUtilSimple.addNewItem(new Card(heading, desc, checkBox.isChecked()));
-            Toast toast = Toast.makeText(getActivity(),
-                    "Successful", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(getActivity(), "Successful", Toast.LENGTH_SHORT).show();
             res = true;
         } else {
+            //todo не понятно, в каком поле ошибка
             textHeading.setError("Please enter value");
             textDesc.setError("Please enter value");
             res = false;

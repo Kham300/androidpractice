@@ -11,14 +11,9 @@ import io.mycompany.androidpractice.R;
 
 public class FragmentThree extends Fragment {
 
-    private static final int LAYOUT = R.layout.fragment_three;
-    private View view;
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
-        view = inflater.inflate(LAYOUT, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_three, container, false);
     }
 }

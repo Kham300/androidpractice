@@ -1,19 +1,17 @@
 package io.mycompany.androidpractice;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 
 import io.mycompany.androidpractice.adapter.TabsPagerFragmentAdapter;
 import io.mycompany.androidpractice.fragments.FragmentOne;
@@ -21,7 +19,7 @@ import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
 import io.mycompany.androidpractice.util.DataUtilSimple;
 
-public class PageViewActivity extends AppCompatActivity implements FragmentOne.CallActivityFromFragment{
+public class PageViewActivity extends AppCompatActivity implements FragmentOne.CallActivityFromFragment {
 
     private ViewPager viewPager;
 
@@ -52,7 +50,7 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -81,7 +79,7 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
         //adapter setup
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -110,16 +108,17 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
     }
 
     private void invalidateOptionsMenu(int position) {
-        for(int i = 0; i < adapter.getCount(); i++) {
+        for (int i = 0; i < adapter.getCount(); i++) {
             Fragment fragment = adapter.getItem(i);
             fragment.setHasOptionsMenu(i == position);
         }
         invalidateOptionsMenu();
     }
 
-      @Override
-      public void refreshDataInFragmentTwo() {
+    @Override
+    public void refreshDataInFragmentTwo() {
         FragmentManager fragmentManager = getSupportFragmentManager();
+        //todo не надо искать фрагмент циклом, его можно прекрасно взять по тегу
         for (Fragment fragment : fragmentManager.getFragments()) {
             if (fragment != null && fragment.isVisible() && fragment instanceof FragmentTwo) {
                 ((FragmentTwo) fragment).refreshUi();
@@ -142,27 +141,19 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
                 refreshAllData();
                 return true;
             case R.id.action_actions:
-                notifyActivityToast();
+                Toast.makeText(this,
+                        "Activity", Toast.LENGTH_SHORT).show();
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void notifyActivityToast() {
-        Toast toast = Toast.makeText(this,
-                "Activity", Toast.LENGTH_SHORT);
-        toast.show();
+        return super.onOptionsItemSelected(item);
     }
 
     private void refreshAllData() {
-        Toast toast = Toast.makeText(this,
-                "Refresh data from activity", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this, "Refresh data from activity", Toast.LENGTH_SHORT).show();
         adapter.notifyDataSetChanged();
     }
 
-    public void moveToRight(View view){
+    public void moveToRight(View view) {
         int currentItem = viewPager.getCurrentItem();
         if (currentItem != 2) {
             viewPager.setCurrentItem(currentItem + 1, true);
@@ -171,7 +162,7 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
         }
     }
 
-    public void moveToLeft(View view){
+    public void moveToLeft(View view) {
         int currentItem = viewPager.getCurrentItem();
         if (currentItem != 0) {
             viewPager.setCurrentItem(currentItem - 1, true);
@@ -179,7 +170,6 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
             viewPager.setCurrentItem(3, true);
         }
     }
-
 
 
 }

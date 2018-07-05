@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.adapter.CardAdapter;
 import io.mycompany.androidpractice.dialogs.AddNewItemDialogFragment;
@@ -33,16 +33,15 @@ public class FragmentTwo extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         cardAdapter = new CardAdapter(DataUtilSimple.allListData);
         recyclerView.setAdapter(cardAdapter);
         Button btnAddNewItem = view.findViewById(R.id.btnNewItem);
         btnAddNewItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewItemDialogFragment addNewItemDialogFragment = AddNewItemDialogFragment.newInstance();
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                addNewItemDialogFragment.show(manager,"new item");
+                AddNewItemDialogFragment.newInstance()
+                        .show(getActivity().getSupportFragmentManager(), AddNewItemDialogFragment.DIALOG_TAG);
             }
         });
 
@@ -61,17 +60,15 @@ public class FragmentTwo extends Fragment {
 
         switch (id) {
             case R.id.fragment_action_toast:
-                makeToast();
+                Toast.makeText(getActivity(), "Fragment two Action!", Toast.LENGTH_SHORT).show();
                 return true;
-            default:
-                return false;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void makeToast() {
-        Toast toast = Toast.makeText(getActivity(),
-                "Fragment two Action!", Toast.LENGTH_SHORT);
-        toast.show();
+        //todo в этом методе все действие в одну строчку, поэтому нет смысла его выносить. Был бы смысл, если бы
+        //todo ты в метод передавал параметр и переиспользовал в нескольких местах
     }
 
     public void refreshUi() {

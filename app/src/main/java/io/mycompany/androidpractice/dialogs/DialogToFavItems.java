@@ -18,7 +18,7 @@ public class DialogToFavItems extends DialogFragment {
     public DialogToFavItems() {
     }
 
-    public static DialogToFavItems newInstance(){
+    public static DialogToFavItems newInstance() {
         String title = "Warning!";
         DialogToFavItems dialogToFavItems = new DialogToFavItems();
         Bundle args = new Bundle();
@@ -30,14 +30,16 @@ public class DialogToFavItems extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         String title = null;
         if (getArguments() != null) {
             title = getArguments().getString("title");
         }
         getDialog().setTitle(title);
         View view = inflater.inflate(R.layout.dialog_fav_item, container);
-        view.findViewById(R.id.btnYes).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btnYes);
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
@@ -57,6 +59,8 @@ public class DialogToFavItems extends DialogFragment {
     }
 
     public interface DialogToFavItemsListener {
+
+        //todo ойойой, низя так делать ойойой нинада диалог никуда передавать
         void onDialogPositiveClick(DialogFragment dialog);
     }
 

@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,21 +17,28 @@ import android.widget.Toast;
 
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.adapter.FavListItemAdapter;
-import io.mycompany.androidpractice.util.DataUtilSimple;
 import io.mycompany.androidpractice.dialogs.DialogFavItemsDesc;
 import io.mycompany.androidpractice.dialogs.DialogToFavItems;
+import io.mycompany.androidpractice.util.DataUtilSimple;
 
-public class FragmentOne extends Fragment implements FavListItemAdapter.CallFragmentFromAdapter, FavListItemAdapter.CreateDialogFragment,  DialogToFavItems.DialogToFavItemsListener, FavListItemAdapter.DialogItemDescriptionListener {
+public class FragmentOne extends Fragment
+        implements FavListItemAdapter.CallFragmentFromAdapter, FavListItemAdapter.CreateDialogFragment,
+        DialogToFavItems.DialogToFavItemsListener, FavListItemAdapter.DialogItemDescriptionListener {
+
 
     @Nullable
     private CallActivityFromFragment callBackToActivity;
+
     private static final int LAYOUT = R.layout.fragment_one_layout;
+
     private FavListItemAdapter favListItemAdapter;
+
     private int itemId;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstance) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstance) {
         View view = inflater.inflate(LAYOUT, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_one);
@@ -58,11 +64,10 @@ public class FragmentOne extends Fragment implements FavListItemAdapter.CallFrag
 
         switch (id) {
             case R.id.fragment_action_toast:
-                makeToast();
+                Toast.makeText(getActivity(), "FragmentOne action!", Toast.LENGTH_SHORT).show();
                 return true;
-                default:
-            return false;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void refreshUi() {
@@ -76,46 +81,37 @@ public class FragmentOne extends Fragment implements FavListItemAdapter.CallFrag
         }
     }
 
-    public void makeToast() {
-        Toast toast = Toast.makeText(getActivity(),
-                "FragmentOne action!", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
     @Override
     public void createDialogFragment(int id) {
+        itemId = id;
         DialogToFavItems dialogToFavItems = DialogToFavItems.newInstance();
-        FragmentManager manager = getActivity().getSupportFragmentManager();
         dialogToFavItems.setmListener(this);
-        dialogToFavItems.show(manager,"Warning");
-        setItemId(id);
+        dialogToFavItems.show(getActivity().getSupportFragmentManager(), "Warning");
     }
 
     @Override
     public void onDialogCollingDesc(@NonNull String heading, @NonNull String description) {
         DialogFavItemsDesc desc = DialogFavItemsDesc.newInstance();
-        FragmentManager ma = getActivity().getSupportFragmentManager();
         Bundle b = new Bundle();
-        b.putString("head", heading);
-        b.putString("desc", description);
+        //todo берем заранее приготовленные константы чтобы не ошибиться в написании
+        b.putString(DialogFavItemsDesc.HEAD, heading);
+        b.putString(DialogFavItemsDesc.DESC, description);
         desc.setArguments(b);
-        desc.show(ma, "about");
+        desc.show(getActivity().getSupportFragmentManager(), DialogFavItemsDesc.DIALOG_TAG);
     }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
+        //todo зачем нам входящим параметром диалог в этом колбэке??
         favListItemAdapter.positiveClick(itemId);
     }
 
     public interface CallActivityFromFragment {
+
         void refreshDataInFragmentTwo();
     }
 
     public void setCallBackToActivity(@Nullable CallActivityFromFragment callBackToActivity) {
         this.callBackToActivity = callBackToActivity;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
     }
 }
