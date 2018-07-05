@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
     public AddNewItemDialogFragment() {
     }
 
-    public static AddNewItemDialogFragment newInstance(){
+    public static AddNewItemDialogFragment newInstance() {
         return new AddNewItemDialogFragment();
     }
 
@@ -45,7 +46,6 @@ public class AddNewItemDialogFragment extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         textHeading = view.findViewById(R.id.editTextHeader);
-        textHeading.setInputType(TYPE_CLASS_TEXT| TYPE_TEXT_FLAG_CAP_SENTENCES);
         textHeading.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -54,38 +54,47 @@ public class AddNewItemDialogFragment extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("qwer", "onTextChanged: " + s + " " + start + " " + before + " " + count);
 
                 String originalText = s.toString();
                 int originalTextLength = originalText.length();
                 int currentSelection = textHeading.getSelectionStart();
 
-                StringBuilder sb  = new StringBuilder();
-                boolean hasChanged = false;
-                for (int i = 0; i < originalTextLength; i++){
+                StringBuilder sb = new StringBuilder();
+                boolean hasChanged = true;
+                for (int i = 0; i < originalTextLength; i++) {
                     char currentChar = originalText.charAt(i);
-                    if (isAllowed(currentChar) && i < 21){
+                    if (isAllowed(currentChar) && i < 21) {
                         sb.append(currentChar);
                     } else {
-                        hasChanged = true;
-                        if (currentSelection >= i){
-                            textHeading.setError("Please insert current letters");
-                            currentSelection --;
+                        hasChanged = false;
+                        textHeading.setError("Please insert current letters");
+                        if (currentSelection >= i) {
+                            currentSelection--;
                         }
                     }
                 }
-                if (hasChanged){
+                if (hasChanged) {
                     String newText = sb.toString();
-                    textHeading.setText(newText);
+                    textHeading.setText(capitalize(newText));
                     textHeading.setSelection(currentSelection);
                 }
             }
 
+            private String capitalize(final String line) {
+                return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
+                Log.d("qwer", "afterTextChanged: " + s);
                 int len = s.length();
                 if (len > 20) {
                     textHeading.setError("must be less then 20 letters");
                 }
+
+
+
             }
 
             private boolean isAllowed(char currentChar) {
@@ -101,7 +110,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(makeNewItem()){
+                if (makeNewItem()) {
                     dismiss();
                 }
             }
@@ -109,7 +118,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
         return view;
     }
 
-    public boolean makeNewItem(){
+    public boolean makeNewItem() {
         boolean res;
         String heading = String.valueOf(textHeading.getText());
         String desc = String.valueOf(textDesc.getText());
