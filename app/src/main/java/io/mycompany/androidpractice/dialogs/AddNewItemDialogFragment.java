@@ -32,6 +32,8 @@ public class AddNewItemDialogFragment extends DialogFragment {
     private EditText textDesc;
     private CheckBox checkBox;
 
+    boolean hasChanged = true;
+
     public AddNewItemDialogFragment() {
     }
 
@@ -43,9 +45,11 @@ public class AddNewItemDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_new_item, container, false);
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         textHeading = view.findViewById(R.id.editTextHeader);
+
+
         textHeading.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -54,46 +58,53 @@ public class AddNewItemDialogFragment extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("qwer", "onTextChanged: " + s + " " + start + " " + before + " " + count);
-
                 String originalText = s.toString();
                 int originalTextLength = originalText.length();
                 int currentSelection = textHeading.getSelectionStart();
 
-                StringBuilder sb = new StringBuilder();
-                boolean hasChanged = true;
-                for (int i = 0; i < originalTextLength; i++) {
-                    char currentChar = originalText.charAt(i);
-                    if (isAllowed(currentChar) && i < 21) {
-                        sb.append(currentChar);
-                    } else {
-                        hasChanged = false;
-                        textHeading.setError("Please insert current letters");
-                        if (currentSelection >= i) {
-                            currentSelection--;
+                if (hasChanged){
+                    hasChanged = false;
+                    if (isAllowed(s.charAt(originalTextLength-1))) {
+                        if (originalTextLength == 1) {
+                            textHeading.setText(originalText.substring(0, 1).toUpperCase() + originalText.substring(1, originalText.length()));
+                            textHeading.setSelection(currentSelection);
+                        } else {
+                            StringBuilder sb = new StringBuilder();
+                            boolean hasChangedInner = false;
+                            for (int i = 0; i < originalTextLength; i++) {
+                                char currentChar = originalText.charAt(i);
+                                if (i < 7) {
+                                    sb.append(currentChar);
+                                    hasChangedInner = true;
+                                } else {
+                                    hasChangedInner = false;
+                                }
+                            }
+                            if (hasChangedInner) {
+                                String newText = sb.toString();
+                                textHeading.setText(newText);
+                                textHeading.setSelection(currentSelection);
+                            }
                         }
+                    } else {
+                        textHeading.setText(originalText.substring(0, originalTextLength -1));
+                        textHeading.setError("Please insert current letters");
+                        textHeading.setSelection(currentSelection - 1);
                     }
+                } else {
+                    hasChanged = true;
                 }
-                if (hasChanged) {
-                    String newText = sb.toString();
-                    textHeading.setText(capitalize(newText));
-                    textHeading.setSelection(currentSelection);
-                }
-            }
-
-            private String capitalize(final String line) {
-                return Character.toUpperCase(line.charAt(0)) + line.substring(1);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.d("qwer", "afterTextChanged: " + s);
                 int len = s.length();
-                if (len > 20) {
+                String originalText = s.toString();
+                if (len > 7) {
                     textHeading.setError("must be less then 20 letters");
+                    textHeading.setText(originalText.substring(0, len -1));
+                    textHeading.setSelection(len -1);
                 }
-
-
 
             }
 
