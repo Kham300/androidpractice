@@ -19,7 +19,7 @@ public class DataUtil extends Application {
     private List<Card> allDataList;
 
 
-    public DataUtil(){
+    public DataUtil() {
         allDataList = new ArrayList<>();
         chosenList = new ArrayList<>();
         initData();
@@ -171,7 +171,7 @@ public class DataUtil extends Application {
 //        return chosenList;
 //    }
 
-    public  Set<Card> checkAndAddForChosenList(){
+    public  Set<Card> checkAndAddForChosenList() {
         Set<Card> chosenSet = new HashSet<>();
          for (Card c : allDataList){
              if (c.isEnabled()){

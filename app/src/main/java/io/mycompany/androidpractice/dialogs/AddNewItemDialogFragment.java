@@ -5,13 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -20,16 +18,11 @@ import android.widget.Toast;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
 import io.mycompany.androidpractice.util.DataUtilSimple;
-import io.mycompany.androidpractice.util.InputFilterMinMax;
-
-import static android.text.InputType.TYPE_CLASS_TEXT;
-import static android.text.InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
-import static android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
 
 public class AddNewItemDialogFragment extends DialogFragment {
 
     public static final String DIALOG_TAG = AddNewItemDialogFragment.class.getSimpleName();
-    public static final int maxLengthOfInputChars = 21;
+    public static final int maxLengthOfInputChars = 20;
     private EditText textHeading;
     private EditText textDesc;
     private CheckBox checkBox;
@@ -97,6 +90,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
                         }
                     } else {
                         hasChanged = true;
+                        notAllow = false;
                     }
                 }
 
