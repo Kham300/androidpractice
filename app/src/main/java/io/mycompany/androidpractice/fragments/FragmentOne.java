@@ -22,7 +22,7 @@ import io.mycompany.androidpractice.util.DataUtilSimple;
 
 public class FragmentOne extends Fragment
         implements FavListItemAdapter.CallFragmentFromAdapter, FavListItemAdapter.CreateDialogFragment,
-        DialogToFavItems.DialogToFavItemsListener, FavListItemAdapter.DialogItemDescriptionListener {
+        DialogToFavItems.DialogToFavItemsListener, FavListItemAdapter.DialogItemDescriptionListener, IFragment {
 
 
     public static final String FRAGMENT_ONE_TAG = "Favorite";
@@ -75,6 +75,7 @@ public class FragmentOne extends Fragment
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     public void refreshUi() {
         favListItemAdapter.notifyDataSetChanged();
     }

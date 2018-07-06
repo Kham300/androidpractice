@@ -17,6 +17,7 @@ import io.mycompany.androidpractice.adapter.TabsPagerFragmentAdapter;
 import io.mycompany.androidpractice.fragments.FragmentOne;
 import io.mycompany.androidpractice.fragments.FragmentThree;
 import io.mycompany.androidpractice.fragments.FragmentTwo;
+import io.mycompany.androidpractice.fragments.IFragment;
 import io.mycompany.androidpractice.util.DataUtilSimple;
 
 public class PageViewActivity extends AppCompatActivity implements FragmentOne.CallActivityFromFragment {
@@ -88,11 +89,8 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    FragmentOne fragment = (FragmentOne) getSupportFragmentManager()
-                            .findFragmentByTag(FragmentOne.FRAGMENT_ONE_TAG);
-                    fragment.refreshUi();
+                    refreshUi(position);
                 }
-
                 invalidateOptionsMenu(position);
             }
 
@@ -114,9 +112,7 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
 
     @Override
     public void refreshDataInFragmentTwo() {
-        FragmentTwo fragment = (FragmentTwo) getSupportFragmentManager()
-                .findFragmentByTag(FragmentTwo.FRAGMENT_TWO_TAG);
-        fragment.refreshUi();
+        refreshUi(1);
     }
 
     @Override
@@ -167,5 +163,8 @@ public class PageViewActivity extends AppCompatActivity implements FragmentOne.C
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
+    public void refreshUi(int position){
+        ((IFragment) adapter.getItem(position)).refreshUi();
+    }
 
 }

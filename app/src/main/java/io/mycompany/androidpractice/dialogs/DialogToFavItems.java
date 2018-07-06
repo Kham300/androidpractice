@@ -44,7 +44,6 @@ public class DialogToFavItems extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    //TODO NPE??????
                     mListener.onDialogPositiveClick();
                     dismiss();
                 }

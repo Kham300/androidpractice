@@ -20,12 +20,11 @@ import io.mycompany.androidpractice.adapter.CardAdapter;
 import io.mycompany.androidpractice.dialogs.AddNewItemDialogFragment;
 import io.mycompany.androidpractice.util.DataUtilSimple;
 
-public class FragmentTwo extends Fragment {
+public class FragmentTwo extends Fragment implements IFragment {
 
     public static final String FRAGMENT_TWO_TAG = "All Items";
 
     private CardAdapter cardAdapter;
-
 
     @Nullable
     @Override
@@ -61,12 +60,13 @@ public class FragmentTwo extends Fragment {
 
         switch (id) {
             case R.id.fragment_action_toast:
-                Toast.makeText(getActivity(), "Fragment two Action!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "FragmentTwo Action!", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     public void refreshUi() {
         cardAdapter.notifyDataSetChanged();
     }

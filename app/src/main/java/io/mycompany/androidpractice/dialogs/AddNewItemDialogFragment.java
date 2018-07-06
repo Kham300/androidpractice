@@ -30,13 +30,9 @@ public class AddNewItemDialogFragment extends DialogFragment {
 
     public static final String DIALOG_TAG = AddNewItemDialogFragment.class.getSimpleName();
     public static final int maxLengthOfInputChars = 21;
-
     private EditText textHeading;
-
     private EditText textDesc;
-
     private CheckBox checkBox;
-
     boolean hasChanged = true;
     boolean notAllow = false;
 
@@ -113,9 +109,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
                     textHeading.setText(originalText.substring(0, len -1));
                     textHeading.setSelection(len -1);
                 }
-
             }
-
         });
 
         textDesc = view.findViewById(R.id.editTextDescription);
@@ -148,9 +142,9 @@ public class AddNewItemDialogFragment extends DialogFragment {
             textHeading.setError("Please enter value");
             textDesc.setError("Please enter value");
             res = false;
-        }else if ((heading.length() == 0) && (desc.length() != 0)){
+        }else if (heading.length() == 0){
             textHeading.setError("Please enter value");
-        } else if ((heading.length() != 0) && (desc.length() == 0)) {
+        } else if (desc.length() == 0) {
             textDesc.setError("Please enter value");
         } else {
             DataUtilSimple.addNewItem(new Card(heading, desc, checkBox.isChecked()));
