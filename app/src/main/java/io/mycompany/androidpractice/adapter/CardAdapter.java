@@ -27,8 +27,6 @@ import io.mycompany.androidpractice.util.DataUtilSimple;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
     private List<Card> cardList;
-    @Nullable
-    private CreateDialogFragmentFromAllList callbackDialogFragment;
     public CardAdapter(List<Card> list) {
         this.cardList = list;
     }
@@ -130,14 +128,4 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         }
 
     }
-
-    //interface to call from activity ze fragment dialog
-    public interface CreateDialogFragmentFromAllList {
-        void createDialogFragment();
-    }
-
-    public void setCallback(@Nullable CreateDialogFragmentFromAllList callback) {
-        this.callbackDialogFragment = callback;
-    }
-
 }

@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import io.mycompany.androidpractice.R;
 
@@ -18,7 +19,7 @@ public class DialogToFavItems extends DialogFragment {
     public DialogToFavItems() {
     }
 
-    public static DialogToFavItems newInstance(){
+    public static DialogToFavItems newInstance() {
         String title = "Warning!";
         DialogToFavItems dialogToFavItems = new DialogToFavItems();
         Bundle args = new Bundle();
@@ -30,18 +31,21 @@ public class DialogToFavItems extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         String title = null;
         if (getArguments() != null) {
             title = getArguments().getString("title");
         }
         getDialog().setTitle(title);
         View view = inflater.inflate(R.layout.dialog_fav_item, container);
-        view.findViewById(R.id.btnYes).setOnClickListener(new View.OnClickListener() {
+        Button btn = view.findViewById(R.id.btnYes);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onDialogPositiveClick(DialogToFavItems.this);
+                    //TODO NPE??????
+                    mListener.onDialogPositiveClick();
                     dismiss();
                 }
             }
@@ -57,7 +61,7 @@ public class DialogToFavItems extends DialogFragment {
     }
 
     public interface DialogToFavItemsListener {
-        void onDialogPositiveClick(DialogFragment dialog);
+        void onDialogPositiveClick();
     }
 
     public void setmListener(@Nullable DialogToFavItemsListener mListener) {

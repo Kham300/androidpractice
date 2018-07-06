@@ -11,14 +11,12 @@ import io.mycompany.androidpractice.R;
 
 public class FragmentThree extends Fragment {
 
-    private static final int LAYOUT = R.layout.fragment_three;
-    private View view;
+    public static final String FRAGMENT_THREE_TAG = "Fragment three";
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
-        view = inflater.inflate(LAYOUT, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_three, container, false);
     }
 }

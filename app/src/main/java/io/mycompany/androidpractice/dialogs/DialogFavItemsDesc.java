@@ -13,6 +13,12 @@ import io.mycompany.androidpractice.R;
 
 public class DialogFavItemsDesc extends DialogFragment {
 
+    public static final String DIALOG_TAG = "about";
+
+    public static final String HEAD = "head";
+
+    public static final String DESC = "desc";
+
     public DialogFavItemsDesc() {
     }
 
@@ -28,8 +34,8 @@ public class DialogFavItemsDesc extends DialogFragment {
         TextView desc = view.findViewById(R.id.description);
         if (getArguments() != null) {
             getDialog().setTitle("about");
-            heading.setText(getArguments().getString("head"));
-            desc.setText(getArguments().getString("desc"));
+            heading.setText(getArguments().getString(HEAD));
+            desc.setText(getArguments().getString(DESC));
         }
         return view;
     }
