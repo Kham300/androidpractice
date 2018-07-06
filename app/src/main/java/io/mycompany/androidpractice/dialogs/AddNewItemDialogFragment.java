@@ -38,6 +38,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
     private CheckBox checkBox;
 
     boolean hasChanged = true;
+    boolean notAllow = false;
 
     public AddNewItemDialogFragment() {
     }
@@ -50,7 +51,6 @@ public class AddNewItemDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_new_item, container, false);
-//        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         textHeading = view.findViewById(R.id.editTextHeader);
         textHeading.addTextChangedListener(new TextWatcher() {
@@ -66,46 +66,49 @@ public class AddNewItemDialogFragment extends DialogFragment {
                 String originalText = s.toString();
                 int originalTextLength = originalText.length();
                 int currentSelection = textHeading.getSelectionStart();
+                if (originalTextLength - 1 < 0) {
+                    notAllow = true;
+                }
 
-                if (hasChanged){
+                if (!notAllow && hasChanged) {
                     hasChanged = false;
-                    if (isAllowed(s.charAt(originalTextLength-1))) {
-                        if (originalTextLength == 1) {
-                            textHeading.setText(originalText.substring(0, 1).toUpperCase() + originalText.substring(1, originalText.length()));
-                            textHeading.setSelection(currentSelection);
-                        } else {
-                            StringBuilder sb = new StringBuilder();
-                            boolean hasChangedInner = false;
-                            for (int i = 0; i < originalTextLength; i++) {
-                                char currentChar = originalText.charAt(i);
-                                if (i < 7) {
-                                    sb.append(currentChar);
-                                    hasChangedInner = true;
-                                } else {
-                                    hasChangedInner = false;
+                        if (isAllowed(s.charAt(originalTextLength - 1))) {
+                            if (originalTextLength == 1) {
+                                textHeading.setText(originalText.substring(0, 1).toUpperCase() + originalText.substring(1, originalText.length()));
+                                textHeading.setSelection(currentSelection);
+                            } else {
+                                StringBuilder sb = new StringBuilder();
+                                boolean hasChangedInner = false;
+                                for (int i = 0; i < originalTextLength; i++) {
+                                    char currentChar = originalText.charAt(i);
+                                    if (i < maxLengthOfInputChars) {
+                                        sb.append(currentChar);
+                                        hasChangedInner = true;
+                                    } else {
+                                        hasChangedInner = false;
+                                    }
+                                }
+                                if (hasChangedInner) {
+                                    String newText = sb.toString();
+                                    textHeading.setText(newText);
+                                    textHeading.setSelection(currentSelection);
                                 }
                             }
-                            if (hasChangedInner) {
-                                String newText = sb.toString();
-                                textHeading.setText(newText);
-                                textHeading.setSelection(currentSelection);
-                            }
+                        } else {
+                            textHeading.setText(originalText.substring(0, originalTextLength - 1));
+                            textHeading.setError("Please insert current letters");
+                            textHeading.setSelection(currentSelection - 1);
                         }
                     } else {
-                        textHeading.setText(originalText.substring(0, originalTextLength -1));
-                        textHeading.setError("Please insert current letters");
-                        textHeading.setSelection(currentSelection - 1);
+                        hasChanged = true;
                     }
-                } else {
-                    hasChanged = true;
                 }
-            }
 
             @Override
             public void afterTextChanged(Editable s) {
                 int len = s.length();
                 String originalText = s.toString();
-                if (len > 7) {
+                if (len > maxLengthOfInputChars) {
                     textHeading.setError("must be less then 20 letters");
                     textHeading.setText(originalText.substring(0, len -1));
                     textHeading.setSelection(len -1);
@@ -134,9 +137,7 @@ public class AddNewItemDialogFragment extends DialogFragment {
     private boolean isAllowed(char currentChar) {
         return Character.isLetter(currentChar) && !Character.isSpaceChar(currentChar);
     }
-    private String capitalize(final String line) {
-        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
-    }
+
 
     public boolean makeNewItem() {
         boolean res = false;
