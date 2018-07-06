@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,6 +20,11 @@ import android.widget.Toast;
 import io.mycompany.androidpractice.R;
 import io.mycompany.androidpractice.model.Card;
 import io.mycompany.androidpractice.util.DataUtilSimple;
+import io.mycompany.androidpractice.util.InputFilterMinMax;
+
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
+import static android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
 
 public class AddNewItemDialogFragment extends DialogFragment {
 
@@ -30,6 +37,8 @@ public class AddNewItemDialogFragment extends DialogFragment {
 
     private CheckBox checkBox;
 
+    boolean hasChanged = true;
+
     public AddNewItemDialogFragment() {
     }
 
@@ -39,17 +48,15 @@ public class AddNewItemDialogFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_new_item, container, false);
-
-        //todo инициализацию переменных лучше выносить в отдельный метод init(view)
+//        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         textHeading = view.findViewById(R.id.editTextHeader);
         textHeading.addTextChangedListener(new TextWatcher() {
-            //todo анонимный класс, когда он большой, лучше вынести в отдельный метод для лучшей читаемости
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -60,34 +67,50 @@ public class AddNewItemDialogFragment extends DialogFragment {
                 int originalTextLength = originalText.length();
                 int currentSelection = textHeading.getSelectionStart();
 
-                StringBuilder sb = new StringBuilder();
-                boolean hasChanged = true;
-                for (int i = 0; i < originalTextLength; i++) {
-                    char currentChar = originalText.charAt(i);
-                    if (isAllowed(currentChar) && i < maxLengthOfInputChars) {
-                        sb.append(currentChar);
-                    } else {
-                        hasChanged = false;
-                        textHeading.setError("Please insert current letters");
-                        if (currentSelection >= i) {
-                            currentSelection--;
+                if (hasChanged){
+                    hasChanged = false;
+                    if (isAllowed(s.charAt(originalTextLength-1))) {
+                        if (originalTextLength == 1) {
+                            textHeading.setText(originalText.substring(0, 1).toUpperCase() + originalText.substring(1, originalText.length()));
+                            textHeading.setSelection(currentSelection);
+                        } else {
+                            StringBuilder sb = new StringBuilder();
+                            boolean hasChangedInner = false;
+                            for (int i = 0; i < originalTextLength; i++) {
+                                char currentChar = originalText.charAt(i);
+                                if (i < 7) {
+                                    sb.append(currentChar);
+                                    hasChangedInner = true;
+                                } else {
+                                    hasChangedInner = false;
+                                }
+                            }
+                            if (hasChangedInner) {
+                                String newText = sb.toString();
+                                textHeading.setText(newText);
+                                textHeading.setSelection(currentSelection);
+                            }
                         }
+                    } else {
+                        textHeading.setText(originalText.substring(0, originalTextLength -1));
+                        textHeading.setError("Please insert current letters");
+                        textHeading.setSelection(currentSelection - 1);
                     }
-                }
-                if (hasChanged) {
-                    String newText = sb.toString();
-                    textHeading.setText(capitalize(newText));
-                    textHeading.setSelection(currentSelection);
+                } else {
+                    hasChanged = true;
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.d("qwer", "afterTextChanged: " + s);
                 int len = s.length();
-                if (len > 20) {
+                String originalText = s.toString();
+                if (len > 7) {
                     textHeading.setError("must be less then 20 letters");
+                    textHeading.setText(originalText.substring(0, len -1));
+                    textHeading.setSelection(len -1);
                 }
+
             }
 
         });
@@ -135,5 +158,4 @@ public class AddNewItemDialogFragment extends DialogFragment {
         }
         return res;
     }
-
 }
